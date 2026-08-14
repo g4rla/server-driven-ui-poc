@@ -1,0 +1,85 @@
+{
+  "catalogVersion": "1.1.0",
+  "description": "Catálogo de componentes do design system habilitados para telas de formalização via SDUI. O resolver (Lambda) e o renderer (front) só reconhecem tipos declarados aqui — qualquer tipo fora desta lista é rejeitado na validação. Evolução do catálogo é aditiva (novo componente ou nova prop opcional = minor); breaking change exige major + migração das screen definitions publicadas.",
+  "components": {
+    "Section": {
+      "description": "Contêiner estrutural de uma tela ou de um bloco de conteúdo.",
+      "allowsChildren": true,
+      "props": {
+        "title": { "type": "string", "required": false, "description": "Título exibido acima do bloco." }
+      }
+    },
+    "Text": {
+      "description": "Bloco de texto simples (parágrafo, disclaimer, instrução). O conteúdo é sempre renderizado como texto puro — nunca interpretado como HTML/markdown.",
+      "allowsChildren": false,
+      "props": {
+        "content": { "type": "string", "required": true },
+        "variant": { "type": "string", "required": false, "enum": ["body", "caption", "legal", "heading"] }
+      }
+    },
+    "List": {
+      "description": "Lista de itens de texto.",
+      "allowsChildren": false,
+      "props": {
+        "items": {
+          "type": "array",
+          "required": true,
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "Accordion": {
+      "description": "Bloco recolhível com título e conteúdo interno (termos, condições, detalhamento).",
+      "allowsChildren": true,
+      "props": {
+        "title": { "type": "string", "required": true },
+        "defaultOpen": { "type": "boolean", "required": false }
+      }
+    },
+    "KeyValueTable": {
+      "description": "Tabela de pares rótulo/valor (resumo de condições contratuais).",
+      "allowsChildren": false,
+      "props": {
+        "rows": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": { "type": "string", "required": true },
+              "value": { "type": "string", "required": true }
+            }
+          }
+        }
+      }
+    },
+    "Checkbox": {
+      "description": "Checkbox de aceite (termos, condições, autorizações). O estado marcado/desmarcado pertence ao front; o id identifica o aceite no evento de submissão.",
+      "allowsChildren": false,
+      "props": {
+        "id": { "type": "string", "required": true, "description": "Identificador semântico do aceite (ex.: 'aceite-termos-consorcio')." },
+        "label": { "type": "string", "required": true },
+        "required": { "type": "boolean", "required": false, "description": "Se true, o host deve bloquear ações de submit enquanto não marcado. Default: false." }
+      }
+    },
+    "Button": {
+      "description": "Botão de ação. A action é um objeto semântico interpretado pelo host/renderer — o SDUI descreve a intenção, nunca código ou URL arbitrária.",
+      "allowsChildren": false,
+      "props": {
+        "label": { "type": "string", "required": true },
+        "variant": { "type": "string", "required": false, "enum": ["primary", "secondary", "danger"] },
+        "action": {
+          "type": "object",
+          "required": true,
+          "description": "Discriminada por action.type. Formas válidas: {type:'navigate', screenId, screenVersion?} avança para outra screen definition renderizada pelo mesmo renderer; {type:'back'} volta para a screen anterior na pilha de navegação do host; {type:'submit', intent} finaliza a jornada com intent 'accept' ou 'decline' (o host valida checkboxes required antes de submeter).",
+          "properties": {
+            "type": { "type": "string", "required": true, "enum": ["navigate", "back", "submit"] },
+            "screenId": { "type": "string", "required": false },
+            "screenVersion": { "type": "string", "required": false },
+            "intent": { "type": "string", "required": false, "enum": ["accept", "decline"] }
+          }
+        }
+      }
+    }
+  }
+}
