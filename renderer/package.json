@@ -1,0 +1,16 @@
+{
+  "name": "sdui-poc-renderer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Renderer SDUI de referência: interpreta o JSON resolvido e emite eventos semânticos.",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "typescript": "^5.5.0"
+  }
+}
