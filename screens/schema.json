@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sdui-poc.local/screen-definition.schema.json",
+  "title": "ScreenDefinition",
+  "description": "Envelope de uma screen definition SDUI. A validação estrutural fina (type contra o catálogo, props tipadas, allowsChildren) é feita pelo resolver usando catalog/schema.json — este schema garante o formato do envelope e da árvore.",
+  "type": "object",
+  "required": ["screenId", "screenVersion", "catalogVersion", "root"],
+  "additionalProperties": false,
+  "properties": {
+    "screenId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Identificador estável da tela (kebab-case), ex.: 'consorcio-resumo'."
+    },
+    "screenVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Versão semântica da definição. Definições publicadas são imutáveis: qualquer mudança gera nova versão."
+    },
+    "catalogVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Versão do catálogo contra a qual esta definição foi autorada e validada."
+    },
+    "title": {
+      "type": "string",
+      "description": "Nome de exibição para ferramentas de autoria/gestão; não é renderizado."
+    },
+    "variables": {
+      "type": "object",
+      "description": "Declaração das variáveis que o payload de originação deve fornecer. Chave = nome usado nos placeholders {{nome}}.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["type"],
+        "additionalProperties": false,
+        "properties": {
+          "type": { "enum": ["string", "boolean", "array"] },
+          "description": { "type": "string" },
+          "required": { "type": "boolean", "default": true }
+        }
+      }
+    },
+    "root": { "$ref": "#/$defs/node" }
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "required": ["type", "props"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "type": "string", "description": "Deve existir em catalog/schema.json (validado pelo resolver)." },
+        "props": { "type": "object" },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/node" }
+        }
+      }
+    }
+  }
+}
