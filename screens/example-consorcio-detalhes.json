@@ -1,0 +1,50 @@
+{
+  "screenId": "consorcio-detalhes",
+  "screenVersion": "1.0.0",
+  "catalogVersion": "1.1.0",
+  "title": "Detalhes do contrato — Consórcio",
+  "variables": {
+    "grupoCota": { "type": "string", "description": "Identificação do grupo e cota" },
+    "taxaAdministracao": { "type": "string", "description": "Taxa de administração total, já formatada" },
+    "fundoReserva": { "type": "string", "description": "Percentual do fundo de reserva, já formatado" },
+    "condicoesLance": { "type": "array", "description": "Regras de lance do grupo" },
+    "condicoesDesistencia": { "type": "array", "description": "Regras de desistência e devolução" }
+  },
+  "root": {
+    "type": "Section",
+    "props": { "title": "Detalhes do contrato — grupo {{grupoCota}}" },
+    "children": [
+      {
+        "type": "KeyValueTable",
+        "props": {
+          "rows": [
+            { "label": "Taxa de administração total", "value": "{{taxaAdministracao}}" },
+            { "label": "Fundo de reserva", "value": "{{fundoReserva}}" }
+          ]
+        }
+      },
+      {
+        "type": "Accordion",
+        "props": { "title": "Condições de lance", "defaultOpen": true },
+        "children": [
+          { "type": "List", "props": { "items": "{{condicoesLance}}" } }
+        ]
+      },
+      {
+        "type": "Accordion",
+        "props": { "title": "Desistência e devolução de valores", "defaultOpen": false },
+        "children": [
+          { "type": "List", "props": { "items": "{{condicoesDesistencia}}" } }
+        ]
+      },
+      {
+        "type": "Text",
+        "props": { "content": "Em caso de dúvida, consulte o regulamento completo do grupo antes de aceitar.", "variant": "caption" }
+      },
+      {
+        "type": "Button",
+        "props": { "label": "Voltar", "variant": "secondary", "action": { "type": "back" } }
+      }
+    ]
+  }
+}

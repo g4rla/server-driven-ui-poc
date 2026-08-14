@@ -1,0 +1,68 @@
+{
+  "screenId": "cartao-adesao",
+  "screenVersion": "1.0.0",
+  "catalogVersion": "1.1.0",
+  "title": "Adesão — Cartão de crédito",
+  "variables": {
+    "nomeCliente": { "type": "string", "description": "Nome completo do cliente" },
+    "nomeProduto": { "type": "string", "description": "Nome comercial do cartão" },
+    "limiteAprovado": { "type": "string", "description": "Limite aprovado, já formatado" },
+    "anuidade": { "type": "string", "description": "Condição de anuidade, já formatada" },
+    "cetAnual": { "type": "string", "description": "CET anual do crédito rotativo, já formatado" },
+    "beneficios": { "type": "array", "description": "Lista de benefícios do cartão" },
+    "aceitaDebitoAutomatico": { "type": "boolean", "required": false, "description": "Se true, exibe o aceite de débito automático pré-aberto" }
+  },
+  "root": {
+    "type": "Section",
+    "props": { "title": "Adesão ao {{nomeProduto}}" },
+    "children": [
+      {
+        "type": "Text",
+        "props": { "content": "{{nomeCliente}}, confira as condições do seu novo cartão antes de confirmar.", "variant": "body" }
+      },
+      {
+        "type": "KeyValueTable",
+        "props": {
+          "rows": [
+            { "label": "Limite aprovado", "value": "{{limiteAprovado}}" },
+            { "label": "Anuidade", "value": "{{anuidade}}" },
+            { "label": "CET anual (rotativo)", "value": "{{cetAnual}}" }
+          ]
+        }
+      },
+      {
+        "type": "Accordion",
+        "props": { "title": "Benefícios do cartão", "defaultOpen": "{{aceitaDebitoAutomatico}}" },
+        "children": [
+          { "type": "List", "props": { "items": "{{beneficios}}" } }
+        ]
+      },
+      {
+        "type": "Text",
+        "props": { "content": "O uso do crédito rotativo está sujeito a juros. Consulte as taxas vigentes no app.", "variant": "legal" }
+      },
+      {
+        "type": "Section",
+        "props": {},
+        "children": [
+          {
+            "type": "Checkbox",
+            "props": { "id": "aceite-contrato-cartao", "label": "Li e aceito o contrato do cartão de crédito", "required": true }
+          },
+          {
+            "type": "Checkbox",
+            "props": { "id": "opt-in-debito-automatico", "label": "Quero pagar a fatura por débito automático", "required": false }
+          },
+          {
+            "type": "Button",
+            "props": { "label": "Recusar", "variant": "danger", "action": { "type": "submit", "intent": "decline" } }
+          },
+          {
+            "type": "Button",
+            "props": { "label": "Aceitar e contratar", "variant": "primary", "action": { "type": "submit", "intent": "accept" } }
+          }
+        ]
+      }
+    ]
+  }
+}

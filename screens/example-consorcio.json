@@ -1,0 +1,80 @@
+{
+  "screenId": "consorcio-resumo",
+  "screenVersion": "1.0.0",
+  "catalogVersion": "1.1.0",
+  "title": "Resumo da contratação — Consórcio",
+  "variables": {
+    "nomeCliente": { "type": "string", "description": "Nome completo do cliente" },
+    "grupoCota": { "type": "string", "description": "Identificação do grupo e cota" },
+    "valorCarta": { "type": "string", "description": "Valor da carta de crédito, já formatado (ex.: R$ 80.000,00)" },
+    "prazoMeses": { "type": "string", "description": "Prazo total em meses, já formatado" },
+    "parcelaMensal": { "type": "string", "description": "Valor da parcela mensal, já formatado" },
+    "clausulasResumo": { "type": "array", "description": "Lista de cláusulas resumidas do contrato" }
+  },
+  "root": {
+    "type": "Section",
+    "props": { "title": "Contratação de Consórcio" },
+    "children": [
+      {
+        "type": "Text",
+        "props": { "content": "Olá, {{nomeCliente}}. Revise as condições abaixo antes de confirmar a sua adesão.", "variant": "body" }
+      },
+      {
+        "type": "KeyValueTable",
+        "props": {
+          "rows": [
+            { "label": "Grupo / cota", "value": "{{grupoCota}}" },
+            { "label": "Valor da carta de crédito", "value": "{{valorCarta}}" },
+            { "label": "Prazo", "value": "{{prazoMeses}}" },
+            { "label": "Parcela mensal", "value": "{{parcelaMensal}}" }
+          ]
+        }
+      },
+      {
+        "type": "Accordion",
+        "props": { "title": "Resumo das cláusulas", "defaultOpen": false },
+        "children": [
+          { "type": "List", "props": { "items": "{{clausulasResumo}}" } },
+          {
+            "type": "Text",
+            "props": { "content": "O texto integral do contrato está disponível na tela de detalhes.", "variant": "caption" }
+          }
+        ]
+      },
+      {
+        "type": "Text",
+        "props": { "content": "A contemplação ocorre por sorteio ou lance, conforme regulamento do grupo. Este resumo não substitui o contrato.", "variant": "legal" }
+      },
+      {
+        "type": "Section",
+        "props": {},
+        "children": [
+          {
+            "type": "Checkbox",
+            "props": { "id": "aceite-termos-consorcio", "label": "Li e aceito os termos do contrato de consórcio", "required": true }
+          },
+          {
+            "type": "Checkbox",
+            "props": { "id": "aceite-regulamento-grupo", "label": "Declaro ciência do regulamento do grupo", "required": true }
+          },
+          {
+            "type": "Button",
+            "props": {
+              "label": "Ver detalhes do contrato",
+              "variant": "secondary",
+              "action": { "type": "navigate", "screenId": "consorcio-detalhes", "screenVersion": "1.0.0" }
+            }
+          },
+          {
+            "type": "Button",
+            "props": { "label": "Recusar", "variant": "danger", "action": { "type": "submit", "intent": "decline" } }
+          },
+          {
+            "type": "Button",
+            "props": { "label": "Aceitar e assinar", "variant": "primary", "action": { "type": "submit", "intent": "accept" } }
+          }
+        ]
+      }
+    ]
+  }
+}
