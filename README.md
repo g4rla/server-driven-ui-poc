@@ -19,6 +19,7 @@ originação ──payload──▶ resolver (Go/Lambda) ──JSON resolvido─
 | `screens/schema.json` | JSON Schema do envelope de screen definition |
 | `screens/FORMAT.md` | Semântica de placeholders `{{var}}`, ações, versionamento |
 | `screens/example-*.json` | Screen definitions de exemplo (2 produtos + tela secundária) |
+| `docs/catalog-guide.md` | **Guia do catálogo/schemas: o que é cada arquivo e como evoluir** |
 | `docs/host-contract.md` | Contrato do host: gating de aceite, eventos `SduiEvent`, mock HTTP |
 | `docs/adoption-guide.md` | **Insumos pra implementação real em ambiente corporativo** |
 | `resolver/` | Resolver Go (stdlib only): valida + resolve placeholders + persiste |
